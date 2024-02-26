@@ -1,0 +1,217 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <TItle>Rick and Morty Characters</TItle>
+    <link rel="icon" href="https://www.freeiconspng.com/uploads/rick-and-morty-icon-png-26.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="scripts.js"></script>
+
+  <style>
+      body{
+        text-align: center;
+        padding: 50px;
+        background-image: url('https://wallpaperaccess.com/full/4356396.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+      }
+      
+      .header-container img {
+        width: 90%;
+         height: auto;
+         float: top;
+         
+      }
+
+      body .header-container {
+        text-align: center;
+      }
+      
+      .info-box {
+        background-color: #3C3E44;
+        height: 600px;
+        width: 400px;
+        border: 3px solid #FFFFFF;
+        border-radius: 10px;
+        display: none;
+        
+      }
+      section {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .name {
+        padding-top: 10px;
+        font-family: oswald;
+        font-style: bold;
+        font-size: 30px;
+        color: #FFFFFF;
+      }
+
+      .gender, .location, .species, .status, .type, .origin, .created {
+        font-family: oswald;
+        font-style: bold;
+        font-size: 19px;
+        color: #FFFFFF;
+      }
+
+      .guide {
+        background-color:  	#3a4767;
+        width: 600px;
+        height: 440px;
+        border-radius: 20px;
+        background-image: url('https://ic.c4assets.com/brands/rick-and-morty/series-6/episode-6/45638582-780b-4dfe-9924-0646520d78fa.jpg?interpolation=progressive-bicubic&output-format=jpeg&output-quality=90&resize=1160px:*');
+        background-position: center center;
+        
+      }
+      .section2 {
+        height: 90vh;
+        display: flex;
+        align-items: center;
+        
+      }
+
+      .guide p {
+        font-family: oswald;
+        padding-bottom: -1px;
+        font-weight: 300px;
+        font-size: 15px;
+      }
+
+      a {
+        font-family: oswald;
+        font-style: bold;
+        font-size: 20px;
+        background-color: #3a4767;
+      }
+      a:link {
+         color: #24325FFF;
+         background-color: transparent;
+         text-decoration: none;
+      }
+      a:visited {
+         color: #3a4767;
+         background-color: transparent;
+         text-decoration: none;
+      }
+      a:active {
+         color: #f9bf1e;
+         background-color: transparent;
+      }
+    </style>
+
+    <script>
+
+        const getAvatar = async () => {
+            
+            let characterName = document.getElementById('name-search').value;
+            let response = await fetch('https://rickandmortyapi.com/api/character/' + characterName);
+            let character = await response.json();
+            console.log(character);
+
+            let name = document.getElementById('name') ;
+            name.innerHTML = character.name;
+            let picture = document.getElementById('char-picture');
+            picture.src = character.image;
+            let status = document.getElementById('status');
+            status.innerHTML = character.status.toUpperCase();
+            let species = document.getElementById('species');
+            species.innerHTML = "SPECIES:" +" " + character.species.toUpperCase();
+            let gender = document.getElementById('gender');
+            gender.innerHTML =  "GENDER:" +" " + character.gender.toUpperCase();
+            let type = document.getElementById('type');
+            type.innerHTML = "Type:" + " " + character.type;
+            let location = document.getElementById('location');
+            location.innerHTML = "Location:" + " " +character.location.name;
+            let origin = document.getElementById('origin');
+            origin.innerHTML = "Origin:" + " " +character.origin.name;
+            let created = document.getElementById('created');
+            created.innerHTML = "Created:" + " " +character.created;
+            
+            name.style.color = "FFE15D";
+           
+            if (character.status == 'Alive') {
+                status.style.color = "#91f086";
+            }else if (character.status == 'Dead') {
+                status.style.color = "#FB6467FF";
+            }else if (character.status == 'unknown'){
+                status.style.color = "yellow";
+            }
+
+            if (character.species == 'Human'){
+                species.style.color = "#6699CC";
+            } else if (character.species == 'Alien') {
+                species.style.color = "#a0d29e";
+            } else if (character.species == 'Mythological Creature'){
+                species.style.color = "#C147E9";
+            } else if (character.species == 'Robot') {
+                species.style.color = "	#d5d5d5";
+            }
+
+            if (character.gender == 'Male') {
+                gender.style.color = "#009EFF";
+            } else if (character.gender == 'Female') {
+                gender.style.color = "#fa93d2"
+            }
+        }
+        function showDiv() {
+            document.getElementById('info-box').style.display = "block";
+        }
+    </script>
+
+  </head>
+  
+  <body>
+       <div id="header-container" class="header-container">
+            <img src="https://logos-world.net/wp-content/uploads/2022/01/Rick-And-Morty-Logo.png" id="banner">
+        </div>
+
+        <input type="text" id="name-search">
+        <button onclick="getAvatar(), showDiv()" id="button" >Search</button>
+
+        <section>
+            <div class="info-box" id="info-box">
+                <img src="" alt="">
+                <div class="name" id="name"></div>
+            <div class="picture-container" >
+                <img src="" id="char-picture" class="char-picture" >
+            </div>
+            <br>
+                 <div class="status" id="status"></div>
+                 <div class="species" id="species"></div>
+                 <div class="gender" id="gender"></div>
+                 <div class="type" id="type"></div>
+                <div class="location" id="location"></div>
+                <div class="origin" id="origin"></div>
+                <br>
+                <div class="created" id="created"></div>
+                
+             </div>
+        </section>
+
+        <section class="section2">
+            <div class="guide">
+                <h3>INSTRUCTION</h3>
+                <p>Enter a number ranging from 1-826 in the text box to get a character</p>
+                <p>Recommendations:</p>
+                <p>1</p>
+                <p>3</p>
+                <p>7</p>
+                <p>10</p>
+                <p>204</p>
+                <p>396</p>
+                <p>400</p>
+                <p>700</p>
+                <p>826</p>
+                <a href="https://rickandmortyapi.com/">CLICK HERE TO CHECK REFERENCE</a>
+                
+            </div>
+        </section>
+  </body>
+</html>
